@@ -1,0 +1,47 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.1.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+}
+
+group = 'com.oath2.demo'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// implementation 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.1.RELEASE'
+	// implementation 'com.okta.spring:okta-spring-boot-starter:1.4.0'
+	compile group: 'org.keycloak', name: 'keycloak-spring-boot-starter', version: '10.0.2'
+	compile 'org.keycloak:keycloak-adapter-spi:10.0.2'
+	runtimeOnly 'com.h2database:h2'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.keycloak.bom:keycloak-adapter-bom:10.0.2"
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
